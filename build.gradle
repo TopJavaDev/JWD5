@@ -1,0 +1,15 @@
+plugins {
+    id 'war'
+    id 'idea'
+    id 'org.akhikhl.gretty' version '1.4.2'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '8.5.5'
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+}
