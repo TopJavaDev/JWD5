@@ -7,13 +7,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class FrontController extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
+    private final static String SAX = "SAX";
+    private final static String StAX = "StAX";
+    private final static String DOM = "DOM";
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String parserType = req.getHeader("parserType");
+        switch (parserType) {
+            case SAX: {
+
+            }
+
+        }
     }
 }
