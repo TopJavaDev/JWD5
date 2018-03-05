@@ -14,11 +14,26 @@ public class FrontController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parserType = req.getHeader("parserType");
+        resp.setContentType("text/html;charset=UTF-8");
         switch (parserType) {
             case SAX: {
 
-            }
 
+
+                break;
+            }
+            case StAX: {
+
+
+
+                break;
+            }
+            case DOM: {
+
+
+
+
+            }
         }
     }
 }
