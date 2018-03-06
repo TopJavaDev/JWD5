@@ -1,18 +1,18 @@
 package by.tc.task05.parser.stax;
 
-import by.tc.task05.model.Entity;
-import by.tc.task05.parser.iface.Parser;
+import by.tc.task05.model.Book;
+import by.tc.task05.parser.iface.XmlParser;
 
 import java.util.List;
 
-public class StaxParser implements Parser {
+public class StaxParser implements XmlParser {
     @Override
     public void setFileSource() {
 
     }
 
     @Override
-    public List<Entity> parse() {
+    public List<Book> parse() {
 
         return null;
     }

@@ -1,7 +1,7 @@
 package by.tc.task05.parser;
 
 import by.tc.task05.parser.dom.DOMParser;
-import by.tc.task05.parser.iface.Parser;
+import by.tc.task05.parser.iface.XmlParser;
 import by.tc.task05.parser.sax.SaxParser;
 import by.tc.task05.parser.stax.StaxParser;
 
@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ParserManager {
     private static final ParserManager instance = new ParserManager();
-    private Map<String, Parser> parsers;
+    private Map<String, XmlParser> parsers;
 
     private ParserManager() {
         parsers.put("SAX", new SaxParser());
@@ -21,7 +21,7 @@ public class ParserManager {
         return instance;
     }
 
-    public Parser getParser(String parserType) {
+    public XmlParser getParser(String parserType) {
         return parsers.get(parserType);
     }
 }

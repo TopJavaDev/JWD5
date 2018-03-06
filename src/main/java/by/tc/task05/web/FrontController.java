@@ -1,8 +1,9 @@
 package by.tc.task05.web;
 
-import by.tc.task05.model.Entity;
+import by.tc.task05.model.Book;
 import by.tc.task05.parser.ParserManager;
-import by.tc.task05.parser.iface.Parser;
+import by.tc.task05.parser.iface.XmlParser;
+import org.xml.sax.SAXException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,13 +19,17 @@ public class FrontController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parserType = req.getHeader("parserType");
         ParserManager parserManager = ParserManager.getInstance();
-        Parser concreteParser = parserManager.getParser(parserType);
+        XmlParser concreteParser = parserManager.getParser(parserType);
 
 
-        List<Entity> parsedEntities = concreteParser.parse();
+        try {
+            List<Book> parsedEntities = concreteParser.parse();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
 
         resp.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("parseResults");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("parsingResults");
         requestDispatcher.forward(req, resp);
     }
 }
