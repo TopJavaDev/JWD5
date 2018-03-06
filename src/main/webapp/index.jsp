@@ -5,7 +5,7 @@
   </head>
   <body>
     <h2>Welcome!</h2>
-    <h3>Select xml parser type:</h3>
+    <h3>Select xml by.tc.task05.parser type:</h3>
     <form action="parseXml" method="get">
       <label>
         <input type="radio" name="parserType" value="SAX">SAX
