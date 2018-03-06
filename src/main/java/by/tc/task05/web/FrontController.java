@@ -4,6 +4,7 @@ import by.tc.task05.model.Entity;
 import by.tc.task05.parser.ParserManager;
 import by.tc.task05.parser.iface.Parser;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +23,8 @@ public class FrontController extends HttpServlet {
 
         List<Entity> parsedEntities = concreteParser.parse();
 
-
         resp.setContentType("text/html;charset=UTF-8");
-
-
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("parseResults");
+        requestDispatcher.forward(req, resp);
     }
 }
