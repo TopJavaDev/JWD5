@@ -1,19 +1,25 @@
 package by.tc.task05.model;
 
+import java.util.Date;
+
 public class Book {
-    private int id;
+    private String id;
     private String author;
     private String title;
     private String genre;
-    private String price;
-    private String publish_date;
+    private float price;
+    private Date publish_date;
     private String description;
 
-    public int getId() {
+    public Book(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -41,19 +47,19 @@ public class Book {
         this.genre = genre;
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public String getPublish_date() {
+    public Date getPublish_date() {
         return publish_date;
     }
 
-    public void setPublish_date(String publish_date) {
+    public void setPublish_date(Date publish_date) {
         this.publish_date = publish_date;
     }
 

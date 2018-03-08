@@ -1,6 +1,7 @@
 package by.tc.task05.parser.sax;
 
 import by.tc.task05.model.Book;
+import by.tc.task05.model.BookAttribute;
 import by.tc.task05.parser.exception.ParserException;
 import by.tc.task05.parser.iface.XmlParser;
 import org.xml.sax.Attributes;
@@ -11,72 +12,117 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SaxParser implements XmlParser {
 
     @Override
     public List<Book> parse() throws ParserException {
-        XMLReader xmlReader = null;
+        XMLReader xmlReader;
         try {
             xmlReader = XMLReaderFactory.createXMLReader();
         } catch (SAXException e) {
-            throw new ParserException(e.getCause());
+            throw new ParserException(e.getMessage());
         }
         SaxParserHandler handler = new SaxParserHandler();
         xmlReader.setContentHandler(handler);
         try {
             xmlReader.parse(XML_INPUT_SOURCE);
         } catch (IOException | SAXException e) {
-            e.printStackTrace();
+            throw new ParserException(e.getMessage());
         }
         return handler.getBooks();
     }
 
     class SaxParserHandler extends DefaultHandler {
         private List<Book> bookList;
+        private Book book;
+        private StringBuilder content;
 
         @Override
         public void startDocument() throws SAXException {
-            super.startDocument();
+            System.out.println("Parsing started");
+            bookList = new ArrayList<>();
         }
 
         @Override
         public void endDocument() throws SAXException {
-            super.endDocument();
+            System.out.println("Parsing ended");
         }
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-            super.startElement(uri, localName, qName, attributes);
+            if (qName.equalsIgnoreCase("book")) {
+                book = new Book(attributes.getValue("id"));
+            } else {
+                content = new StringBuilder();
+            }
         }
 
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
-            super.endElement(uri, localName, qName);
+            if (qName.equalsIgnoreCase("book")) {
+                bookList.add(book);
+                book = null;
+            } else {
+                BookAttribute bookAttribute = BookAttribute.valueOf(qName.toUpperCase());
+                switch (bookAttribute) {
+                    case AUTHOR: {
+                        book.setAuthor(content.toString());
+                        break;
+                    }
+                    case DESCRIPTION: {
+                        book.setDescription(content.toString());
+                        break;
+                    }
+                    case PRICE: {
+                        book.setPrice(Float.parseFloat(content.toString()));
+                        break;
+                    }
+                    case GENRE: {
+                        book.setGenre(content.toString());
+                        break;
+                    }
+                    case PUBLISH_DATE: {
+                        try {
+                            book.setPublish_date(DateFormat.getInstance().parse(content.toString()));
+                        } catch (ParseException e) {
+                            throw new ParserException(e.getMessage());
+                        }
+                        break;
+                    }
+                    case TITLE: {
+                        book.setTitle(content.toString());
+                        break;
+                    }
+                }
+            }
         }
 
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
-            super.characters(ch, start, length);
+            content.append(ch, start, length);
         }
 
         @Override
-        public void warning(SAXParseException e) throws SAXException {
-            super.warning(e);
+        public void warning(SAXParseException e) throws ParserException {
+            throw new ParserException(e.getMessage(), false);
         }
 
         @Override
-        public void error(SAXParseException e) throws SAXException {
-            super.error(e);
+        public void error(SAXParseException e) throws ParserException {
+            throw new ParserException(e.getMessage(), false);
         }
 
         @Override
-        public void fatalError(SAXParseException e) throws SAXException {
-            super.fatalError(e);
+        public void fatalError(SAXParseException e) throws ParserException {
+            throw new ParserException(e.getMessage());
         }
 
-        public List<Book> getBooks() {
+        List<Book> getBooks() {
             return bookList;
         }
     }
