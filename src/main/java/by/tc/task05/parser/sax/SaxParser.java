@@ -4,14 +4,12 @@ import by.tc.task05.model.Book;
 import by.tc.task05.model.BookAttribute;
 import by.tc.task05.parser.exception.ParserException;
 import by.tc.task05.parser.iface.XmlParser;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.XMLReader;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -20,7 +18,8 @@ import java.util.List;
 public class SaxParser implements XmlParser {
 
     @Override
-    public List<Book> parse() throws ParserException {
+    public List<Book> parse(InputStream source) throws ParserException {
+        InputSource xmlInputSource = new InputSource(source);
         XMLReader xmlReader;
         try {
             xmlReader = XMLReaderFactory.createXMLReader();
@@ -30,7 +29,7 @@ public class SaxParser implements XmlParser {
         SaxParserHandler handler = new SaxParserHandler();
         xmlReader.setContentHandler(handler);
         try {
-            xmlReader.parse(XML_INPUT_SOURCE);
+            xmlReader.parse(xmlInputSource);
         } catch (IOException | SAXException e) {
             throw new ParserException(e.getMessage());
         }

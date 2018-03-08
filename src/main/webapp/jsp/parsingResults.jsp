@@ -6,7 +6,13 @@
 </head>
 <body>
     <table>
-
+        <c:forEach var="book" items="${books}">
+            <th>book - ${book.id}</th>
+            <tr>
+                <td>${book.author}</td>
+                <td>${book.title}</td>
+            </tr>
+        </c:forEach>
 
     </table>
 </body>

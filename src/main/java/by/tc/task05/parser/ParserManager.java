@@ -5,11 +5,12 @@ import by.tc.task05.parser.iface.XmlParser;
 import by.tc.task05.parser.sax.SaxParser;
 import by.tc.task05.parser.stax.StaxParser;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ParserManager {
     private static final ParserManager instance = new ParserManager();
-    private Map<String, XmlParser> parsers;
+    private Map<String, XmlParser> parsers = new HashMap<>();
 
     private ParserManager() {
         parsers.put("SAX", new SaxParser());
