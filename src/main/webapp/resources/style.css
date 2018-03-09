@@ -1,0 +1,16 @@
+TABLE {
+    margin: 0px auto;
+    border-collapse: collapse;
+    width: 70%;
+}
+TD, TH {
+    padding: 3px;
+    border: 1px solid black;
+    width: 20%;
+}
+TH {
+    background: #b0e0e6;
+}
+p {
+    text-align: center;
+}

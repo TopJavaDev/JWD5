@@ -1,10 +1,11 @@
 package by.tc.task05.model;
 
-public enum BookAttribute {
+public enum BookAttributeTag {
     AUTHOR,
     TITLE,
     GENRE,
     PRICE,
     PUBLISH_DATE,
-    DESCRIPTION
+    DESCRIPTION,
+    CATALOG
 }

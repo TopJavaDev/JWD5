@@ -1,7 +1,7 @@
 package by.tc.task05.parser.sax;
 
 import by.tc.task05.model.Book;
-import by.tc.task05.model.BookAttribute;
+import by.tc.task05.model.BookAttributeTag;
 import by.tc.task05.parser.exception.ParserException;
 import by.tc.task05.parser.iface.XmlParser;
 import org.xml.sax.*;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class SaxParser implements XmlParser {
         private List<Book> bookList;
         private Book book;
         private StringBuilder content;
+        private DateFormat publishDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         @Override
         public void startDocument() throws SAXException {
@@ -67,7 +69,7 @@ public class SaxParser implements XmlParser {
                 bookList.add(book);
                 book = null;
             } else {
-                BookAttribute bookAttribute = BookAttribute.valueOf(qName.toUpperCase());
+                BookAttributeTag bookAttribute = BookAttributeTag.valueOf(qName.toUpperCase());
                 switch (bookAttribute) {
                     case AUTHOR: {
                         book.setAuthor(content.toString());
@@ -87,7 +89,7 @@ public class SaxParser implements XmlParser {
                     }
                     case PUBLISH_DATE: {
                         try {
-                            book.setPublish_date(DateFormat.getInstance().parse(content.toString()));
+                            book.setPublishDate(publishDateFormat.parse(content.toString()));
                         } catch (ParseException e) {
                             throw new ParserException(e.getMessage());
                         }
@@ -95,7 +97,6 @@ public class SaxParser implements XmlParser {
                     }
                     case TITLE: {
                         book.setTitle(content.toString());
-                        break;
                     }
                 }
             }

@@ -8,7 +8,7 @@ public class Book {
     private String title;
     private String genre;
     private float price;
-    private Date publish_date;
+    private Date publishDate;
     private String description;
 
     public Book(String id) {
@@ -55,12 +55,12 @@ public class Book {
         this.price = price;
     }
 
-    public Date getPublish_date() {
-        return publish_date;
+    public Date getPublishDate() {
+        return publishDate;
     }
 
-    public void setPublish_date(Date publish_date) {
-        this.publish_date = publish_date;
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
     }
 
     public String getDescription() {

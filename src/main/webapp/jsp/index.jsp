@@ -8,7 +8,7 @@
     <h3>Select xml parser type:</h3>
     <form action="parseXml" method="get">
       <label>
-        <input type="radio" name="parserType" value="SAX">SAX
+        <input type="radio" name="parserType" value="SAX" checked="checked">SAX
       </label>
       <label>
         <input type="radio" name="parserType" value="StAX">StAX
@@ -18,6 +18,7 @@
       </label>
       <br>
       <br>
+      <input type="hidden" name="pageNumber" value="1">
       <input type="submit" value="submit">
     </form>
   </body>
