@@ -5,11 +5,14 @@ import by.tc.task05.parser.iface.XmlParser;
 import by.tc.task05.parser.sax.SaxParser;
 import by.tc.task05.parser.stax.StaxParser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ParserManager {
     private static final ParserManager instance = new ParserManager();
+    private static final DateFormat publishDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Map<String, XmlParser> parsers = new HashMap<>();
 
     private ParserManager() {
@@ -24,5 +27,9 @@ public class ParserManager {
 
     public XmlParser getParser(String parserType) {
         return parsers.get(parserType);
+    }
+
+    public static DateFormat getPublishDateFormat() {
+        return publishDateFormat;
     }
 }

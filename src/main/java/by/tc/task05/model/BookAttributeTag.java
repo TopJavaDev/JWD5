@@ -7,5 +7,6 @@ public enum BookAttributeTag {
     PRICE,
     PUBLISH_DATE,
     DESCRIPTION,
-    CATALOG
+    CATALOG,
+    BOOK
 }
