@@ -1,8 +1,6 @@
 package by.tc.task05.parser.sax;
 
 import by.tc.task05.model.Book;
-import by.tc.task05.model.BookAttributeTag;
-import by.tc.task05.parser.ParserManager;
 import by.tc.task05.parser.exception.ParserException;
 import by.tc.task05.parser.iface.XmlParser;
 import org.xml.sax.*;
@@ -11,7 +9,6 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,41 +59,12 @@ public class SaxParser implements XmlParser {
         }
 
         @Override
-        public void endElement(String uri, String localName, String qName) throws SAXException {
+        public void endElement(String uri, String localName, String qName) throws SAXException, ParserException {
             if (qName.equalsIgnoreCase("book")) {
                 bookList.add(book);
                 book = null;
             } else {
-                BookAttributeTag bookAttribute = BookAttributeTag.valueOf(qName.toUpperCase());
-                switch (bookAttribute) {
-                    case AUTHOR: {
-                        book.setAuthor(content.toString());
-                        break;
-                    }
-                    case DESCRIPTION: {
-                        book.setDescription(content.toString());
-                        break;
-                    }
-                    case PRICE: {
-                        book.setPrice(Float.parseFloat(content.toString()));
-                        break;
-                    }
-                    case GENRE: {
-                        book.setGenre(content.toString());
-                        break;
-                    }
-                    case PUBLISH_DATE: {
-                        try {
-                            book.setPublishDate(ParserManager.getPublishDateFormat().parse(content.toString()));
-                        } catch (ParseException e) {
-                            throw new ParserException(e.getMessage());
-                        }
-                        break;
-                    }
-                    case TITLE: {
-                        book.setTitle(content.toString());
-                    }
-                }
+                book = XmlParser.TagSwitcher.setAttributes(qName.toUpperCase(), content.toString(), book);
             }
         }
 

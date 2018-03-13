@@ -34,6 +34,7 @@ public class FrontController extends HttpServlet {
                 }
             }
         }
+
         resp.setContentType("text/html;charset=UTF-8");
         RequestDispatcher requestDispatcher;
         if (!parsingErrorCause.isEmpty() && errorIsCritical) {

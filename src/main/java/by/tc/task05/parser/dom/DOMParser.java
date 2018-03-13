@@ -1,8 +1,6 @@
 package by.tc.task05.parser.dom;
 
 import by.tc.task05.model.Book;
-import by.tc.task05.model.BookAttributeTag;
-import by.tc.task05.parser.ParserManager;
 import by.tc.task05.parser.exception.ParserException;
 import by.tc.task05.parser.iface.XmlParser;
 import org.w3c.dom.Document;
@@ -15,6 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static by.tc.task05.model.BookAttributeTag.BOOK;
@@ -23,7 +22,7 @@ public class DOMParser implements XmlParser {
 
     @Override
     public List<Book> parse(InputStream source) throws ParserException {
-        List<Book> bookList = null;
+        List<Book> bookList = new ArrayList<>();
         NodeList bookNodes;
         NodeList bookChildNodes;
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -41,9 +40,12 @@ public class DOMParser implements XmlParser {
             Book book = new Book(bookNode.getAttributes().getNamedItem("id").getNodeValue());
             bookChildNodes = bookNode.getChildNodes();
             for (int j = 0; j < bookChildNodes.getLength(); j++) {
-                String childNodeName = bookChildNodes.item(j).getNodeName().toUpperCase();
-                String childNodeValue = bookChildNodes.item(j).getNodeValue();
-                book = XmlParser.TagSwitcher.setAttributes(childNodeName, childNodeValue, book);
+                Node bookChildNode = bookChildNodes.item(j);
+                if (bookChildNode.getNodeType() == Node.ELEMENT_NODE) {
+                    String childNodeName = bookChildNode.getNodeName().toUpperCase();
+                    String childNodeValue = bookChildNode.getFirstChild().getNodeValue();
+                    book = XmlParser.TagSwitcher.setAttributes(childNodeName, childNodeValue, book);
+                }
             }
             bookList.add(book);
         }

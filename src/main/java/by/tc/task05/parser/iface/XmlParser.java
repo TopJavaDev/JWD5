@@ -13,8 +13,9 @@ public interface XmlParser {
     List<Book> parse(InputStream source) throws ParserException;
 
     class TagSwitcher {
-        public static Book setAttributes(String elementName, String elementValue, Book book) {
-            switch (BookAttributeTag.valueOf(elementName)) {
+        public static Book setAttributes(String elementName, String elementValue, Book book) throws ParserException {
+            BookAttributeTag tag = BookAttributeTag.valueOf(elementName);
+            switch (tag) {
                 case AUTHOR: {
                     book.setAuthor(elementValue);
                     break;
@@ -43,8 +44,6 @@ public interface XmlParser {
                     book.setTitle(elementValue);
                     break;
                 }
-                default:
-                    throw new ParserException("unexpected child node in parent node", false);
             }
             return book;
         }
