@@ -46,8 +46,8 @@ public class StaxParser implements XmlParser {
             int elementType = reader.next();
             switch (elementType) {
                 case XMLStreamConstants.START_ELEMENT: {
-                    elementName = reader.getLocalName();
-                    if (elementName.equalsIgnoreCase(BookAttributeTag.BOOK.toString())) {
+                    elementName = reader.getLocalName().toUpperCase();
+                    if (elementName.equals(BookAttributeTag.BOOK.toString())) {
                         book = new Book(reader.getAttributeValue(null, "id"));
                     }
                     break;
@@ -58,7 +58,7 @@ public class StaxParser implements XmlParser {
                     if (text.isEmpty()) {
                         break;
                     }
-                    switch (BookAttributeTag.valueOf(elementName.toUpperCase())) {
+                    switch (BookAttributeTag.valueOf(elementName)) {
                         case AUTHOR: {
                             book.setAuthor(text);
                             break;
@@ -86,6 +86,8 @@ public class StaxParser implements XmlParser {
                         case TITLE: {
                             book.setTitle(text);
                         }
+                        default:
+                            throw new ParserException("unexpected child node value in book node", false);
                     }
                     break;
                 }

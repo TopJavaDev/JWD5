@@ -51,5 +51,8 @@
         </a>
     </c:forEach>
 </p>
+<p>
+    <c:out value="${error}"/>
+</p>
 </body>
 </html>
