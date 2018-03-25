@@ -11,6 +11,6 @@ TD, TH {
 TH {
     background: #b0e0e6;
 }
-p {
+p, form {
     text-align: center;
 }
